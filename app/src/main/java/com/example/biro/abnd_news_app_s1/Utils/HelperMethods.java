@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.biro.abnd_news_app_s1.News.News;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -96,7 +97,22 @@ public class HelperMethods {
         try {
             JSONObject root = new JSONObject(JsonStr);
 
-            // TODO: befejezni az adatok kinyerését a JSON stringből
+            JSONObject response = root.getJSONObject("response");
+            JSONArray results = response.getJSONArray("results");
+
+            for (int i = 0; i < results.length(); ++i)
+            {
+                JSONObject result = results.getJSONObject(i);
+
+                newsArrayList.add(new News(
+                        result.getString("sectionName"),
+                        result.getString("webPublicationDate"),
+                        result.getString("webTitle"),
+                        parseURL(result.getString("webUrl"))
+                ));
+
+            }
+
         } catch (JSONException e) {
             Log.d(TAG, "getNewsFromJson: " + e.getMessage());
         }

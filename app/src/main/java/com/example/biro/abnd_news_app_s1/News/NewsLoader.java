@@ -3,12 +3,18 @@ package com.example.biro.abnd_news_app_s1.News;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
+import com.example.biro.abnd_news_app_s1.Utils.HelperMethods;
+
+import java.net.URL;
 import java.util.List;
 
 public class NewsLoader extends AsyncTaskLoader<List<News>> {
 
-    public NewsLoader(Context context) {
+    private URL url;
+
+    public NewsLoader(Context context, URL url) {
         super(context);
+        this.url = url;
     }
 
     @Override
@@ -18,6 +24,6 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
 
     @Override
     public List<News> loadInBackground() {
-        return null;
+        return HelperMethods.getNewsFromInternet(url);
     }
 }
