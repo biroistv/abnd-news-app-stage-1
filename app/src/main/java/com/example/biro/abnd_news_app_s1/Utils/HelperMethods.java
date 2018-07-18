@@ -1,5 +1,9 @@
 package com.example.biro.abnd_news_app_s1.Utils;
 
+import android.content.ContentUris;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.example.biro.abnd_news_app_s1.News.News;
@@ -118,6 +122,13 @@ public class HelperMethods {
         }
 
         return newsArrayList;
+    }
+
+    public static boolean isInternetAvailable(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
 }

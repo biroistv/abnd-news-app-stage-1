@@ -1,7 +1,10 @@
 package com.example.biro.abnd_news_app_s1;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,14 +26,17 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
     private String SEARCH_TERM = "search?q=";
-    private NewsAdapter newsAdapter;
+    private NewsAdapter newsAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupLoader();
+        if (HelperMethods.isInternetAvailable(MainActivity.this))
+            getLoaderManager().initLoader(0, null, this);
+        else
+            ((TextView) findViewById(R.id.main_activity_empty_result)).setText("No internet");
 
         (findViewById(R.id.main_activity_progbar)).setVisibility(View.GONE);
         Button searchButton = findViewById(R.id.main_activity_searchBtn);
@@ -39,23 +45,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View v) {
 
-                (findViewById(R.id.main_activity_progbar)).setVisibility(View.VISIBLE);
-                SEARCH_TERM = "search?q=" + ((EditText)findViewById(R.id.main_activity_editText)).getText();
+                if (HelperMethods.isInternetAvailable(MainActivity.this)) {
+                    (findViewById(R.id.main_activity_progbar)).setVisibility(View.VISIBLE);
+                    SEARCH_TERM = "search?q=" + ((EditText) findViewById(R.id.main_activity_editText)).getText();
 
-                getLoaderManager().restartLoader(0, null, MainActivity.this);
+                    if (getLoaderManager() != null)
+                        getLoaderManager().restartLoader(0, null, MainActivity.this);
+                    else
+                        getLoaderManager().initLoader(0, null, MainActivity.this);
+                }else {
+                    if (newsAdapter != null)
+                        newsAdapter.clear();
+                    ((TextView) findViewById(R.id.main_activity_empty_result)).setText("No internet");
+                }
             }
         });
     }
 
-    private void setupLoader(){
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-    private void updateUI(ArrayList<News> newsArrayList){
+    private void updateUI(ArrayList<News> newsArrayList) {
         newsAdapter = new NewsAdapter(this, newsArrayList);
         ListView lv = findViewById(R.id.main_activity_listView);
         lv.setEmptyView(findViewById(R.id.main_activity_empty_result));
-        ((TextView)findViewById(R.id.main_activity_empty_result)).setText("There is no news.");
+        ((TextView) findViewById(R.id.main_activity_empty_result)).setText("There is no news.");
         lv.setAdapter(newsAdapter);
     }
 
@@ -70,9 +81,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> data) {
-        ((ProgressBar)findViewById(R.id.main_activity_progbar)).setVisibility(View.GONE);
+        ((ProgressBar) findViewById(R.id.main_activity_progbar)).setVisibility(View.GONE);
         updateUI(new ArrayList<News>(data));
-        //getLoaderManager().destroyLoader(0);
     }
 
     @Override
