@@ -1,11 +1,12 @@
-package com.example.biro.abnd_news_app_s1.Utils;
+package com.example.biro.abnd_news_app_s1.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import com.example.biro.abnd_news_app_s1.News.News;
+import com.example.biro.abnd_news_app_s1.exception.RespondCodeException;
+import com.example.biro.abnd_news_app_s1.news.News;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,9 +41,7 @@ public class HelperMethods {
     }
 
     public static ArrayList<News> getNewsFromInternet(URL url){
-
         String JsonSTR = getJsonFromNet(url);
-
         return getNewsFromJson(JsonSTR);
     }
 
@@ -60,12 +59,17 @@ public class HelperMethods {
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
 
-            inputStream = httpURLConnection.getInputStream();
-            jsonStr = getJsonStringFromStream(inputStream);
+                if (httpURLConnection.getResponseCode() == 200) {
+                    inputStream = httpURLConnection.getInputStream();
+                    jsonStr = getJsonStringFromStream(inputStream);
+                }else
+                    throw new RespondCodeException("The respond code on connect is " + httpURLConnection.getResponseCode());
 
         } catch (IOException e) {
             Log.d(TAG, "getJsonFromNet: " + e.getMessage());
-        }finally {
+        } catch (RespondCodeException e) {
+            Log.d(TAG, "getJsonFromNet: " + e.getMessage());
+        } finally {
             if (httpURLConnection != null)
                 httpURLConnection.disconnect();
 
@@ -129,5 +133,4 @@ public class HelperMethods {
 
         return (networkInfo != null && networkInfo.isConnected());
     }
-
 }

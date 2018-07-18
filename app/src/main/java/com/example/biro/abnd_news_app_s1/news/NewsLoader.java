@@ -1,9 +1,9 @@
-package com.example.biro.abnd_news_app_s1.News;
+package com.example.biro.abnd_news_app_s1.news;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import com.example.biro.abnd_news_app_s1.Utils.HelperMethods;
+import com.example.biro.abnd_news_app_s1.utils.HelperMethods;
 
 import java.net.URL;
 import java.util.List;

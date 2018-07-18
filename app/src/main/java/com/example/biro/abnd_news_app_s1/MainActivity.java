@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.biro.abnd_news_app_s1.News.News;
-import com.example.biro.abnd_news_app_s1.News.NewsAdapter;
-import com.example.biro.abnd_news_app_s1.News.NewsLoader;
-import com.example.biro.abnd_news_app_s1.Utils.HelperMethods;
+import com.example.biro.abnd_news_app_s1.news.News;
+import com.example.biro.abnd_news_app_s1.news.NewsAdapter;
+import com.example.biro.abnd_news_app_s1.news.NewsLoader;
+import com.example.biro.abnd_news_app_s1.utils.HelperMethods;
 
 import java.util.ArrayList;
 import java.util.List;

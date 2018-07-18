@@ -1,4 +1,4 @@
-package com.example.biro.abnd_news_app_s1.News;
+package com.example.biro.abnd_news_app_s1.news;
 
 import java.net.URL;
 
