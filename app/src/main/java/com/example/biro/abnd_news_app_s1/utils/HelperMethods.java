@@ -28,6 +28,9 @@ public class HelperMethods {
     public static final String SITE = "https://content.guardianapis.com/";
     public static final String API_KEY = "&api-key=914853e8-38e5-4804-a7f7-b5dfa869fca5";
 
+    /**
+     *  This method create an URL from string
+     * */
     public static URL parseURL(String source){
         URL url = null;
 
@@ -40,6 +43,9 @@ public class HelperMethods {
         return url;
     }
 
+    /**
+     *  This method give back all the news what i get from the Json
+     * */
     public static ArrayList<News> getNewsFromInternet(URL url){
         String JsonSTR = getJsonFromNet(url);
         return getNewsFromJson(JsonSTR);
@@ -126,6 +132,9 @@ public class HelperMethods {
         return newsArrayList;
     }
 
+    /**
+     *  This method check the internet connection status.
+     * */
     public static boolean isInternetAvailable(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connectivityManager != null;
