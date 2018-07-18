@@ -22,7 +22,7 @@ import static android.support.constraint.Constraints.TAG;
 public class HelperMethods {
 
     public static final String SITE = "https://content.guardianapis.com/";
-    public static final String API_KEY = "api-key=914853e8-38e5-4804-a7f7-b5dfa869fca5";
+    public static final String API_KEY = "&api-key=914853e8-38e5-4804-a7f7-b5dfa869fca5";
 
     public static URL parseURL(String source){
         URL url = null;

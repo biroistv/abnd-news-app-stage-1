@@ -1,54 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="14dp"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="14dp"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:background="#888282"
         android:layout_width="2dp"
+        android:layout_height="match_parent"
         android:layout_marginRight="5dp"
-        android:layout_height="match_parent"/>
+        android:background="#888282" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_margin="4dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <TextView
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:id="@+id/list_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Title" />
 
-            <TextView
-                android:id="@+id/list_item_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Title"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text=" - "/>
-
-            <TextView
-                android:id="@+id/list_item_section"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Section"/>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/list_item_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Section" />
 
         <TextView
             android:id="@+id/list_item_pubdate"
-            android:layout_margin="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Publication date"/>
+            tools:text="Publication date" />
 
     </LinearLayout>
 
