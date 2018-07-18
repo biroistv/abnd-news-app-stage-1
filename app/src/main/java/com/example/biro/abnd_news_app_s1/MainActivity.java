@@ -4,6 +4,7 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,15 +22,17 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
-    private String SEARCH_TERM;
+    private String SEARCH_TERM = "search?q=";
+    private NewsAdapter newsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        (findViewById(R.id.main_activity_progbar)).setVisibility(View.GONE);
+        setupLoader();
 
+        (findViewById(R.id.main_activity_progbar)).setVisibility(View.GONE);
         Button searchButton = findViewById(R.id.main_activity_searchBtn);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -37,10 +40,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onClick(View v) {
 
                 (findViewById(R.id.main_activity_progbar)).setVisibility(View.VISIBLE);
-
                 SEARCH_TERM = "search?q=" + ((EditText)findViewById(R.id.main_activity_editText)).getText();
 
-                setupLoader();
+                getLoaderManager().restartLoader(0, null, MainActivity.this);
             }
         });
     }
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void updateUI(ArrayList<News> newsArrayList){
-        NewsAdapter newsAdapter = new NewsAdapter(this, newsArrayList);
+        newsAdapter = new NewsAdapter(this, newsArrayList);
         ListView lv = findViewById(R.id.main_activity_listView);
         lv.setEmptyView(findViewById(R.id.main_activity_empty_result));
         ((TextView)findViewById(R.id.main_activity_empty_result)).setText("There is no news.");
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
+        Log.d("help", "onCreateLoader: " + SEARCH_TERM);
         return new NewsLoader(
                 this,
                 HelperMethods.parseURL(HelperMethods.SITE + SEARCH_TERM + HelperMethods.API_KEY)
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<List<News>> loader, List<News> data) {
         ((ProgressBar)findViewById(R.id.main_activity_progbar)).setVisibility(View.GONE);
         updateUI(new ArrayList<News>(data));
-        getLoaderManager().destroyLoader(0);
+        //getLoaderManager().destroyLoader(0);
     }
 
     @Override
