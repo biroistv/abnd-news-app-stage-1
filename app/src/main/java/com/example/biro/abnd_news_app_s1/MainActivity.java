@@ -1,18 +1,14 @@
 package com.example.biro.abnd_news_app_s1;
 
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.Loader;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.biro.abnd_news_app_s1.News.News;
@@ -35,8 +31,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (HelperMethods.isInternetAvailable(MainActivity.this))
             getLoaderManager().initLoader(0, null, this);
-        else
-            ((TextView) findViewById(R.id.main_activity_empty_result)).setText("No internet");
+        else {
+            ((TextView) findViewById(R.id.main_activity_empty_result)).setText(R.string.no_internet);
+        }
 
         (findViewById(R.id.main_activity_progbar)).setVisibility(View.GONE);
         Button searchButton = findViewById(R.id.main_activity_searchBtn);
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }else {
                     if (newsAdapter != null)
                         newsAdapter.clear();
-                    ((TextView) findViewById(R.id.main_activity_empty_result)).setText("No internet");
+                    ((TextView) findViewById(R.id.main_activity_empty_result)).setText(R.string.no_internet);
                 }
             }
         });
@@ -66,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         newsAdapter = new NewsAdapter(this, newsArrayList);
         ListView lv = findViewById(R.id.main_activity_listView);
         lv.setEmptyView(findViewById(R.id.main_activity_empty_result));
-        ((TextView) findViewById(R.id.main_activity_empty_result)).setText("There is no news.");
+        ((TextView) findViewById(R.id.main_activity_empty_result)).setText(R.string.no_news);
         lv.setAdapter(newsAdapter);
     }
 
@@ -81,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> data) {
-        ((ProgressBar) findViewById(R.id.main_activity_progbar)).setVisibility(View.GONE);
-        updateUI(new ArrayList<News>(data));
+        findViewById(R.id.main_activity_progbar).setVisibility(View.GONE);
+        updateUI(new ArrayList<>(data));
     }
 
     @Override

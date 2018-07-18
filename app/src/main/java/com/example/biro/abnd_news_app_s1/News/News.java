@@ -1,6 +1,5 @@
 package com.example.biro.abnd_news_app_s1.News;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class News {
@@ -9,8 +8,6 @@ public class News {
     private String publicationDate;
     private String title;
     private URL url;
-
-    public News(){}
 
     public News(String sectionName, String publicationDate, String title, URL url) {
         this.sectionName = sectionName;
@@ -24,16 +21,8 @@ public class News {
         return sectionName;
     }
 
-    public void setSectionName(String sectionName) {
-        this.sectionName = sectionName;
-    }
-
     public String getPublicationDate() {
         return publicationDate;
-    }
-
-    public void setPublicationDate(String publicationDate) {
-        this.publicationDate = publicationDate;
     }
 
     public String getTitle() {
@@ -48,15 +37,4 @@ public class News {
         return url;
     }
 
-    public void setUrl(URL url) {
-        this.url = url;
-    }
-
-    public void setUrlFromString(String url) {
-        try {
-            this.url = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
 }

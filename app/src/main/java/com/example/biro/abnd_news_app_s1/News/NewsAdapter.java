@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.example.biro.abnd_news_app_s1.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NewsAdapter extends ArrayAdapter<News> {
 
@@ -34,6 +33,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
         final News news = getItem(position);
 
+        assert news != null;
         ((TextView)view.findViewById(R.id.list_item_title)).setText(news.getTitle());
         ((TextView)view.findViewById(R.id.list_item_section)).setText(news.getSectionName());
         ((TextView)view.findViewById(R.id.list_item_pubdate)).setText(news.getPublicationDate());

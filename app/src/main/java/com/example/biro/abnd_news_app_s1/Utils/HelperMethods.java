@@ -1,6 +1,5 @@
 package com.example.biro.abnd_news_app_s1.Utils;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -43,9 +42,8 @@ public class HelperMethods {
     public static ArrayList<News> getNewsFromInternet(URL url){
 
         String JsonSTR = getJsonFromNet(url);
-        ArrayList<News> newsArrayList = getNewsFromJson(JsonSTR);
 
-        return newsArrayList;
+        return getNewsFromJson(JsonSTR);
     }
 
     private static String getJsonFromNet(URL url) {
@@ -84,7 +82,7 @@ public class HelperMethods {
     }
 
     private static String getJsonStringFromStream(InputStream inputStream) throws IOException {
-        StringBuffer output = new StringBuffer();
+        StringBuilder output = new StringBuilder();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
         String line;
@@ -126,6 +124,7 @@ public class HelperMethods {
 
     public static boolean isInternetAvailable(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
         return (networkInfo != null && networkInfo.isConnected());
