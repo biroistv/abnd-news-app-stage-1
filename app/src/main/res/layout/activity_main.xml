@@ -26,11 +26,13 @@
             />
 
         <EditText
+            android:maxLines="1"
             android:id="@+id/main_activity_editText"
             android:hint="@string/hint_text"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/main_activity_searchBtn"
