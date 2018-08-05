@@ -5,6 +5,6 @@
     <string name="hint_text">e.g \'football\'</string>
     <string name="no_internet">No internet</string>
     <string name="no_news">There is no news.</string>
-    <string name="settings_manu_item">Settings</string>
+    <string name="settings_menu_item">Settings</string>
     <string name="settings_title">Guardian news settings</string>
 </resources>
