@@ -7,8 +7,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.EditText;
 
+import com.example.biro.abnd_news_app_s1.BuildConfig;
 import com.example.biro.abnd_news_app_s1.R;
 import com.example.biro.abnd_news_app_s1.exception.RespondCodeException;
 import com.example.biro.abnd_news_app_s1.news.News;
@@ -30,33 +30,45 @@ import static android.support.constraint.Constraints.TAG;
 
 public class HelperMethods {
 
-    public static final String SITE = "https://content.guardianapis.com/search?";
-    public static final String API_KEY = "914853e8-38e5-4804-a7f7-b5dfa869fca5";
+    private static final String SITE = "https://content.guardianapis.com/search?";
+    private static final int SUCCESS_CODE = 200;
 
     // This method build up the URL using uriBuilder and the parseURL method
     public static URL createURL(Context context, String searchTerm)
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        // Getting number of news from the preferences
         String numberOfNews = sharedPreferences.getString(
                 context.getString(R.string.settings_news_number_key),
                 context.getString(R.string.settings_news_number_default)
         );
 
+        // Getting the order by value form the preferences
+        String orderBy  = sharedPreferences.getString(
+                context.getString(R.string.settings_order_by_key),
+                context.getString(R.string.settings_order_by_default)
+        );
+
         Uri baseUri = Uri.parse(HelperMethods.SITE);
 
+        // Declaring the uri builder
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
+        // Adding paramater to the uri
         uriBuilder.appendQueryParameter("page-size", numberOfNews);
+        uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("q", searchTerm);
-        uriBuilder.appendQueryParameter("api-key", HelperMethods.API_KEY);
+        uriBuilder.appendQueryParameter("api-key", BuildConfig.MY_GUARDIAN_API_KEY);
 
+        // Pass the string to the to the URL create method
         return parseURL(uriBuilder.toString());
     }
 
     /**
      *  This method create an URL from string
      * */
-    public static URL parseURL(String source){
+    private static URL parseURL(String source){
         URL url = null;
 
         try {
@@ -90,7 +102,7 @@ public class HelperMethods {
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
 
-                if (httpURLConnection.getResponseCode() == 200) {
+                if (httpURLConnection.getResponseCode() == SUCCESS_CODE) {
                     inputStream = httpURLConnection.getInputStream();
                     jsonStr = getJsonStringFromStream(inputStream);
                 }else

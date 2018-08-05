@@ -16,6 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each{
+        it.buildConfigField 'String', 'MY_GUARDIAN_API_KEY', MyTheGuardianApiKey
+    }
+
     sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/menu'] } }
 }
 
