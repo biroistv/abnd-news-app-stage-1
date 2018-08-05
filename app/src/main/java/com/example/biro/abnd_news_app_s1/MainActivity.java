@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,9 +107,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         return new NewsLoader(
                 this,
-                HelperMethods.parseURL(HelperMethods.createURL(
+                HelperMethods.createURL(
                         this,
-                        ((EditText)findViewById(R.id.main_activity_editText)).getText().toString()))
+                        ((EditText)findViewById(R.id.main_activity_editText)).getText().toString())
         );
     }
 

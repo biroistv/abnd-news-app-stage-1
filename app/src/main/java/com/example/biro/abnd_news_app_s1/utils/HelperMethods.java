@@ -33,7 +33,8 @@ public class HelperMethods {
     public static final String SITE = "https://content.guardianapis.com/search?";
     public static final String API_KEY = "914853e8-38e5-4804-a7f7-b5dfa869fca5";
 
-    public static String createURL(Context context, String searchTerm)
+    // This method build up the URL using uriBuilder and the parseURL method
+    public static URL createURL(Context context, String searchTerm)
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String numberOfNews = sharedPreferences.getString(
@@ -49,7 +50,7 @@ public class HelperMethods {
         uriBuilder.appendQueryParameter("q", searchTerm);
         uriBuilder.appendQueryParameter("api-key", HelperMethods.API_KEY);
 
-        return uriBuilder.toString();
+        return parseURL(uriBuilder.toString());
     }
 
     /**
