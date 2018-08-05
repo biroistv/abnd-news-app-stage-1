@@ -7,4 +7,7 @@
     <string name="no_news">There is no news.</string>
     <string name="settings_menu_item">Settings</string>
     <string name="settings_title">Guardian news settings</string>
+    <string name="settings_news_number_label">Number of news displayed</string>
+    <string name="settings_news_number_key" translatable="false">news_number</string>
+    <string name="settings_news_number_default" translatable="false">10</string>
 </resources>

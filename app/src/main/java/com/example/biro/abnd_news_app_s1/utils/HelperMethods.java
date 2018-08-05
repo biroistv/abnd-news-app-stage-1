@@ -1,10 +1,15 @@
 package com.example.biro.abnd_news_app_s1.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.EditText;
 
+import com.example.biro.abnd_news_app_s1.R;
 import com.example.biro.abnd_news_app_s1.exception.RespondCodeException;
 import com.example.biro.abnd_news_app_s1.news.News;
 
@@ -25,8 +30,27 @@ import static android.support.constraint.Constraints.TAG;
 
 public class HelperMethods {
 
-    public static final String SITE = "https://content.guardianapis.com/";
-    public static final String API_KEY = "&api-key=914853e8-38e5-4804-a7f7-b5dfa869fca5";
+    public static final String SITE = "https://content.guardianapis.com/search?";
+    public static final String API_KEY = "914853e8-38e5-4804-a7f7-b5dfa869fca5";
+
+    public static String createURL(Context context, String searchTerm)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String numberOfNews = sharedPreferences.getString(
+                context.getString(R.string.settings_news_number_key),
+                context.getString(R.string.settings_news_number_default)
+        );
+
+        Uri baseUri = Uri.parse(HelperMethods.SITE);
+
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendQueryParameter("page-size", numberOfNews);
+        uriBuilder.appendQueryParameter("q", searchTerm);
+        uriBuilder.appendQueryParameter("api-key", HelperMethods.API_KEY);
+
+        return uriBuilder.toString();
+    }
 
     /**
      *  This method create an URL from string

@@ -3,7 +3,11 @@ package com.example.biro.abnd_news_app_s1;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +28,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
-    private String SEARCH_TERM = "search?q=";
     private NewsAdapter newsAdapter = null;
 
     @Override
@@ -52,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // If we have internet the the loader will start, otherwise "No internet" text appear
         if (HelperMethods.isInternetAvailable(MainActivity.this))
             getLoaderManager().initLoader(0, null, this);
@@ -72,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 // If we have internet the do the search, if we don't have, then "No internet" text appear
                 if (HelperMethods.isInternetAvailable(MainActivity.this)) {
                     (findViewById(R.id.main_activity_progbar)).setVisibility(View.VISIBLE);
-                    SEARCH_TERM = "search?q=" + ((EditText) findViewById(R.id.main_activity_editText)).getText();
 
                     // If the loader manager is null then start a loader manager, otherwise restart it
                     if (getLoaderManager() != null)
@@ -101,10 +102,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
-        Log.d("help", "onCreateLoader: " + SEARCH_TERM);
+
         return new NewsLoader(
                 this,
-                HelperMethods.parseURL(HelperMethods.SITE + SEARCH_TERM + HelperMethods.API_KEY)
+                HelperMethods.parseURL(HelperMethods.createURL(
+                        this,
+                        ((EditText)findViewById(R.id.main_activity_editText)).getText().toString()))
         );
     }
 
