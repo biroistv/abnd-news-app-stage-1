@@ -8,18 +8,17 @@ public class News {
     private String publicationDate;
     private String title;
     private URL url;
+    private String contributor;
 
-    public News(String sectionName, String publicationDate, String title, URL url) {
+    public News(String sectionName, String publicationDate, String title, URL url, String contributor) {
         this.sectionName = sectionName;
         this.publicationDate = publicationDate;
         this.title = title;
         this.url = url;
+        this.contributor = contributor;
     }
 
-    public String getSectionName() {
-
-        return sectionName;
-    }
+    public String getSectionName() { return sectionName; }
 
     public String getPublicationDate() {
         return publicationDate;
@@ -36,5 +35,7 @@ public class News {
     public URL getUrl() {
         return url;
     }
+
+    public String getContributor() { return contributor; }
 
 }

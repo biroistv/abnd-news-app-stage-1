@@ -21,6 +21,8 @@ import com.example.biro.abnd_news_app_s1.utils.HelperMethods;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
     private NewsAdapter newsAdapter = null;
@@ -44,8 +46,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

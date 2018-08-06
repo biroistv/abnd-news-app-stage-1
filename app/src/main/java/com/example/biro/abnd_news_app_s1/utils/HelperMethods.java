@@ -31,7 +31,10 @@ import static android.support.constraint.Constraints.TAG;
 public class HelperMethods {
 
     private static final String SITE = "https://content.guardianapis.com/search?";
+    private static final String CONTRIBUTOR = "contributor";
     private static final int SUCCESS_CODE = 200;
+    private static final int READ_TIMEOUT = 10000;
+    private static final int CONNECTION_TIMEOUT = 15000;
 
     // This method build up the URL using uriBuilder and the parseURL method
     public static URL createURL(Context context, String searchTerm)
@@ -56,10 +59,13 @@ public class HelperMethods {
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         // Adding paramater to the uri
+        uriBuilder.appendQueryParameter("show-tags", CONTRIBUTOR);
         uriBuilder.appendQueryParameter("page-size", numberOfNews);
         uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("q", searchTerm);
         uriBuilder.appendQueryParameter("api-key", BuildConfig.MY_GUARDIAN_API_KEY);
+
+        Log.d(TAG, "createURL: " + uriBuilder.toString());
 
         // Pass the string to the to the URL create method
         return parseURL(uriBuilder.toString());
@@ -97,8 +103,8 @@ public class HelperMethods {
 
         try {
             httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setReadTimeout(10000);
-            httpURLConnection.setConnectTimeout(15000);
+            httpURLConnection.setReadTimeout(READ_TIMEOUT);
+            httpURLConnection.setConnectTimeout(CONNECTION_TIMEOUT);
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
 
@@ -153,11 +159,20 @@ public class HelperMethods {
             {
                 JSONObject result = results.getJSONObject(i);
 
+                JSONArray tags = result.getJSONArray("tags");
+
+                String contributor = null;
+                if (tags.length() > 0) {
+                    JSONObject contributor_data = tags.getJSONObject(0);
+                    contributor = contributor_data.getString("webTitle");
+                }
+
                 newsArrayList.add(new News(
                         result.getString("sectionName"),
                         result.getString("webPublicationDate"),
                         result.getString("webTitle"),
-                        parseURL(result.getString("webUrl"))
+                        parseURL(result.getString("webUrl")),
+                        contributor
                 ));
 
             }
