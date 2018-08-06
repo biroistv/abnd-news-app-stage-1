@@ -76,7 +76,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         @BindView(R.id.list_item_contributor)
         TextView listItemContributor;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }

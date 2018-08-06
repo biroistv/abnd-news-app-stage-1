@@ -7,8 +7,6 @@ public class DateFormatter {
         // JSON date: 2018-08-06T09:00:34Z
 
         String without_z = unformatted_date.subSequence(0, unformatted_date.length() - 1).toString();
-        String date = without_z.replace('T', ' ');
-
-        return date;
+        return without_z.replace('T', ' ');
     }
 }
